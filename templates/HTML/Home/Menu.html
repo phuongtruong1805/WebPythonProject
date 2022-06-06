@@ -1,0 +1,68 @@
+<html lang="vi">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'IMAGE/Logo.PNG' %}">
+
+    <!DOCTYPE html>
+    <title>
+        PTNKTP CINEMA
+    </title>
+    <!--GOOGLE FONTS-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+    <!--OWL CAROUSEL-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" />
+    <!--BOX ICON-->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <!--APP CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'CSS/Home.css' %}">
+
+</head>
+
+    <body>
+        <!-- NAV -->
+        <div class="nav-wrapper">
+            <div class="container">
+                <div class="nav">
+                    <a href="{% url 'Home' %}" class="logo">
+                        <i class='bx bx-movie-play bx-tada'></i>Ci<span class="main-color">ne</span>ma
+                    </a>
+                    <ul class="nav-menu" id="nav-menu">
+                        {% if user.is_authenticated %}
+                        <li><a href="{% url 'Home' %}">Trang Chủ</a></li>
+
+                        <li><a href="{% url 'contact' %}">Liên Hệ</a></li>
+                        <li><a href="{% url 'customer'%}">Thông tin tài khoản</a></li>
+                        {%else%}
+                        <li><a href="{% url 'Home' %}">Trang Chủ</a></li>
+
+                        <li><a href="{% url 'contact' %}">Liên Hệ</a></li>
+                        {% endif %}
+                        <li>
+                                {% if user.is_authenticated %}
+                            <a href="{% url 'logout' %}" class="bth bth-hover">
+                                <span>Đăng Xuất</span>
+                            </a>
+                                {% else %}
+                                <a href="{% url 'Login' %}" class="bth bth-hover">
+                                <span>Đăng Nhập</span>
+                                {% endif %}
+
+                            </a>
+                        </li>
+                    </ul>
+                    <!--MOBILE MENU TOGGLE-->
+                    <div class="hamburger-menu" id="hamburger-menu">
+                        <div class="hamburger"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--END NAV-->
+    {% block content %} {% endblock %}
+
+    </body>
+</html>

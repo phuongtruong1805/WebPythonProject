@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'IMAGE/Logo.PNG' %}">
+    <title> ĐẶT VÉ </title>
+    <!--GOOGLE FONTS-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+    <!--OWL CAROUSEL-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" />
+    <!--BOX ICON-->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <!--APP CSS-->
+    <link rel="stylesheet" href="{% static 'CSS/BookSticket.css'%}">
+    <!--Bootstrap3-->
+
+</head>
+
+<body>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.0/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.0/js/select2.min.js" integrity="sha512-Ge+H9Q46hWR9YcJnDUsEM2WGYXK9kg83H1TCWP43IEntvyU2Y1i+zUTEcmkBPvhXA8YGhw6uUl+eN6pEf3lprA==" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function ()
+        {
+            var $select1=$('#Cinema1'),
+                $select2=$('#timeshow1'),
+                $options=$select2.find('option');
+                $select1.on('change',function ()
+                {
+                    $select2.html($options.filter('[value="'+this.value+'"]'));
+                }).trigger('change');
+        });
+    </script>
+    <!-- NAV -->
+    <div class="nav-wrapper">
+            <div class="container">
+                <div class="nav">
+                    <a href="{% url 'Home' %}" class="logo">
+                        <i class='bx bx-movie-play bx-tada'></i>Ci<span class="main-color">ne</span>ma
+                    </a>
+                    <ul class="nav-menu" id="nav-menu">
+                        {% if user.is_authenticated %}
+                        <li><a href="{% url 'Home' %}">Trang Chủ</a></li>
+
+                        <li><a href="{% url 'contact' %}">Liên Hệ</a></li>
+                        <li><a href="{% url 'customer'%}">Thông tin tài khoản</a></li>
+                        {%else%}
+                        <li><a href="{% url 'Home' %}">Trang Chủ</a></li>
+
+                        <li><a href="{% url 'contact' %}">Liên Hệ</a></li>
+                        {% endif %}
+                        <li>
+                                {% if user.is_authenticated %}
+                            <a href="{% url 'logout' %}" class="bth bth-hover">
+                                <span>Đăng Xuất</span>
+                            </a>
+                                {% else %}
+                                <a href="{% url 'Login' %}" class="bth bth-hover">
+                                <span>Đăng Nhập</span>
+                                {% endif %}
+
+                            </a>
+                        </li>
+                    </ul>
+                    <!--MOBILE MENU TOGGLE-->
+                    <div class="hamburger-menu" id="hamburger-menu">
+                        <div class="hamburger"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!--END NAV-->
+
+    <!--CREATE BUY TICKETS-->
+    <div class="buy-ticket">
+        <!--CREATE INFO-->
+        <div class="info">
+            <h1>CHỌN SUẤT CHIẾU</h1>
+
+            <form action="" method="post">
+            {% csrf_token %}
+                <div class="Time">
+                <h3>Chọn ngày:</h3>
+                <input type="date" name="Date" value="{{ day }}">
+            </div>
+            <div class="List_Cinemas">
+                <h3>Danh sách rạp:</h3>
+                <select id="Cinema" name="Cinema" >
+                    {% for item in b %}
+                        <option  value="{{ item.CinemaInfo.id }}">{{ item.CinemaInfo.Address }}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="Lọc">
+            </div>
+            </form>
+            <form action="" method="post">
+                {% csrf_token %}
+            <div class="timeshow">
+
+
+                <h3>Xuất chiếu:</h3>
+                <select id="timeshow" name="Showtime">
+                    <option selected disabled="true">--- Chọn Xuất Chiếu ---</option>
+                    {% for item in a %}
+                        <option value="{{ item.id}}">{{ item.TimeDef_Start.Start }} - {{ item.End }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <input type="submit" content="Chọn ghế" name="submit1" value="Chọn ghế">
+            </form>
+
+            <hr class="line">
+            <h1 class="screen">SCREEN
+            </h1>
+        </div>
+
+            {% for item in chair %}
+                {% if item.Status == 1 %}
+                <div class="outer-seat1" id="div-inline" style=" background: red">
+                    <div class="inner-seat1" style="background: red"  >
+                        <span class="number" style=" background: red">{{item.Chair.Name}}</span>
+                        <img src="https://img.icons8.com/ios/452/sofa.png" style=" background: red">
+                    </div>
+                </div>
+                {% else %}
+                <div class="outer-seat" id="div-inline" >
+                    <div class="inner-seat" id ="setText{{item.Chair.id}}" >
+                        <span class="number">{{item.Chair.Name}}</span>
+                        <img src="https://img.icons8.com/ios/452/sofa.png">
+                    </div>
+                </div>
+           {% endif %}
+            {% endfor %}
+
+
+        <div class="note">
+            <div class="square-none"></div>
+            <div class="inf-chair">Ghế còn trống</div>
+
+            <div class="square-full"></div>
+            <div class="inf-chair">Ghế đã đặt</div>
+        </div>
+        <!-- Thông tin đặt-->
+        <div class="count-selected">Số Lượng Ghế:
+            <span class="num-chair">0</span>
+        </div>
+
+        <div class="text-selected">
+            <div id="result0" name="Ngày xem được chọn">
+            </div>
+            <div id="result1" name="Rạp phim được chọn">
+            </div>
+            <div id="result2" name="Xuất phim được chọn">
+            </div>
+            <form method="post" id="myform" action="">
+                {% csrf_token %}
+            Vị Trí Ghế:
+            <input type="text" id="test" name="test" style="color: red">
+            </form>
+        </div>
+
+        <div class="buttom" onclick="submitForm()" >
+            <a class="bth bth-hover">
+                <span>Đặt vé</span>
+            </a>
+        </div>
+
+
+    </div>
+
+    </div>
+
+
+
+    <!--JQUERY-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!--APP SCRIPT-->
+    <script src="{% static 'JAVASCRIPT/BookSticket.js'%}"></script>
+    <script>
+        function submitForm()
+        {
+            if($('#test').val() != '')
+            {
+
+                document.getElementById('myform').submit();
+                alert("Đặt vé thành công")
+
+            }
+            else
+            {
+                alert("Vui lòng chọn ghế");
+            }
+        }
+    </script>
+    <script>
+
+        var x=''
+         $("#setText1").click(function(event) {
+           var n = x.search('A1');
+           if(n==-1)
+           {
+               x=x+' A1'
+           }
+           else
+           {
+               x=x.replace(' A1','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText2").click(function(event) {
+           var n = x.search('A2');
+           if(n==-1)
+           {
+               x=x+' A2'
+           }
+           else
+           {
+               x=x.replace(' A2','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText3").click(function(event) {
+           var n = x.search('A3');
+           if(n==-1)
+           {
+               x=x+' A3'
+           }
+           else
+           {
+               x=x.replace(' A3','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText4").click(function(event) {
+           var n = x.search('A4');
+           if(n==-1)
+           {
+               x=x+' A4'
+           }
+           else
+           {
+               x=x.replace(' A4','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText5").click(function(event) {
+           var n = x.search('A5');
+           if(n==-1)
+           {
+               x=x+' A5'
+           }
+           else
+           {
+               x=x.replace(' A5','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText6").click(function(event) {
+           var n = x.search('A6');
+           if(n==-1)
+           {
+               x=x+' A6'
+           }
+           else
+           {
+               x=x.replace(' A6','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText7").click(function(event) {
+           var n = x.search('A7');
+           if(n==-1)
+           {
+               x=x+' A7'
+           }
+           else
+           {
+               x=x.replace(' A7','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText8").click(function(event) {
+           var n = x.search('A8');
+           if(n==-1)
+           {
+               x=x+' A8'
+           }
+           else
+           {
+               x=x.replace(' A8','')
+           }
+            $('#test').val(x);
+        });
+           $("#setText9").click(function(event) {
+           var n = x.search('B1');
+           if(n==-1)
+           {
+               x=x+' B1'
+           }
+           else
+           {
+               x=x.replace(' B1','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText10").click(function(event) {
+           var n = x.search('B2');
+           if(n==-1)
+           {
+               x=x+' B2'
+           }
+           else
+           {
+               x=x.replace(' B2','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText11").click(function(event) {
+           var n = x.search('B3');
+           if(n==-1)
+           {
+               x=x+' B3'
+           }
+           else
+           {
+               x=x.replace(' B3','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText12").click(function(event) {
+           var n = x.search('B4');
+           if(n==-1)
+           {
+               x=x+' B4'
+           }
+           else
+           {
+               x=x.replace(' B4','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText13").click(function(event) {
+           var n = x.search('B5');
+           if(n==-1)
+           {
+               x=x+' B5'
+           }
+           else
+           {
+               x=x.replace(' B5','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText14").click(function(event) {
+           var n = x.search('B6');
+           if(n==-1)
+           {
+               x=x+' B6'
+           }
+           else
+           {
+               x=x.replace(' B6','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText15").click(function(event) {
+           var n = x.search('B7');
+           if(n==-1)
+           {
+               x=x+' B7'
+           }
+           else
+           {
+               x=x.replace(' B7','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText16").click(function(event) {
+           var n = x.search('B8');
+           if(n==-1)
+           {
+               x=x+' B8'
+           }
+           else
+           {
+               x=x.replace(' B8','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText17").click(function(event) {
+           var n = x.search('C1');
+           if(n==-1)
+           {
+               x=x+' C1'
+           }
+           else
+           {
+               x=x.replace(' C1','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText18").click(function(event) {
+           var n = x.search('C2');
+           if(n==-1)
+           {
+               x=x+' C2'
+           }
+           else
+           {
+               x=x.replace(' C2','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText19").click(function(event) {
+           var n = x.search('C3');
+           if(n==-1)
+           {
+               x=x+' C3'
+           }
+           else
+           {
+               x=x.replace(' C3','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText20").click(function(event) {
+           var n = x.search('C4');
+           if(n==-1)
+           {
+               x=x+' C4'
+           }
+           else
+           {
+               x=x.replace(' C4','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText21").click(function(event) {
+           var n = x.search('C5');
+           if(n==-1)
+           {
+               x=x+' C5'
+           }
+           else
+           {
+               x=x.replace(' C5','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText22").click(function(event) {
+           var n = x.search('C6');
+           if(n==-1)
+           {
+               x=x+' C6'
+           }
+           else
+           {
+               x=x.replace(' C6','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText23").click(function(event) {
+           var n = x.search('C7');
+           if(n==-1)
+           {
+               x=x+' C7'
+           }
+           else
+           {
+               x=x.replace(' C7','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText24").click(function(event) {
+           var n = x.search('C8');
+           if(n==-1)
+           {
+               x=x+' C8'
+           }
+           else
+           {
+               x=x.replace(' C8','')
+           }
+            $('#test').val(x);
+        });
+           $("#setText25").click(function(event) {
+           var n = x.search('D1');
+           if(n==-1)
+           {
+               x=x+' D1'
+           }
+           else
+           {
+               x=x.replace(' D1','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText26").click(function(event) {
+           var n = x.search('D2');
+           if(n==-1)
+           {
+               x=x+' D2'
+           }
+           else
+           {
+               x=x.replace(' D2','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText27").click(function(event) {
+           var n = x.search('D3');
+           if(n==-1)
+           {
+               x=x+' D3'
+           }
+           else
+           {
+               x=x.replace(' D3','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText28").click(function(event) {
+           var n = x.search('D4');
+           if(n==-1)
+           {
+               x=x+' D4'
+           }
+           else
+           {
+               x=x.replace(' D4','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText29").click(function(event) {
+           var n = x.search('D5');
+           if(n==-1)
+           {
+               x=x+' D5'
+           }
+           else
+           {
+               x=x.replace(' D5','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText30").click(function(event) {
+           var n = x.search('D6');
+           if(n==-1)
+           {
+               x=x+' D6'
+           }
+           else
+           {
+               x=x.replace(' D6','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText31").click(function(event) {
+           var n = x.search('D7');
+           if(n==-1)
+           {
+               x=x+' D7'
+           }
+           else
+           {
+               x=x.replace(' D7','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText32").click(function(event) {
+           var n = x.search('D8');
+           if(n==-1)
+           {
+               x=x+' D8'
+           }
+           else
+           {
+               x=x.replace(' D8','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText33").click(function(event) {
+           var n = x.search('E1');
+           if(n==-1)
+           {
+               x=x+' E1'
+           }
+           else
+           {
+               x=x.replace(' E1','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText34").click(function(event) {
+           var n = x.search('E2');
+           if(n==-1)
+           {
+               x=x+' E2'
+           }
+           else
+           {
+               x=x.replace(' E2','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText35").click(function(event) {
+           var n = x.search('E3');
+           if(n==-1)
+           {
+               x=x+' E3'
+           }
+           else
+           {
+               x=x.replace(' E3','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText36").click(function(event) {
+           var n = x.search('E4');
+           if(n==-1)
+           {
+               x=x+' E4'
+           }
+           else
+           {
+               x=x.replace(' E4','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText37").click(function(event) {
+           var n = x.search('E5');
+           if(n==-1)
+           {
+               x=x+' E5'
+           }
+           else
+           {
+               x=x.replace(' E5','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText38").click(function(event) {
+           var n = x.search('E6');
+           if(n==-1)
+           {
+               x=x+' E6'
+           }
+           else
+           {
+               x=x.replace(' E6','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText39").click(function(event) {
+           var n = x.search('E7');
+           if(n==-1)
+           {
+               x=x+' E7'
+           }
+           else
+           {
+               x=x.replace(' E7','')
+           }
+            $('#test').val(x);
+        });
+        $("#setText40").click(function(event) {
+           var n = x.search('E8');
+           if(n==-1)
+           {
+               x=x+' E8'
+           }
+           else
+           {
+               x=x.replace(' E8','')
+           }
+            $('#test').val(x);
+        });
+
+
+
+    </script>
+</body>
+
+</html>

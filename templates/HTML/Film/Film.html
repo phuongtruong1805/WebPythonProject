@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+    <title>{{fi.Name}}</title>
+    <link rel="stylesheet" href="{% static 'CSS/styleRongThan.css'%}">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" href="{% static 'IMAGE/Logo.PNG' %}">
+</head>
+
+<body background="{{fi.Background.url}}" style="background-size: 1560px 940px" >
+    <div class="nav-wrapper">
+            <div class="container">
+                <div class="nav">
+                    <a href="{% url 'Home' %}" class="logo">
+                        <i class='bx bx-movie-play bx-tada'></i>Ci<span class="main-color">ne</span>ma
+                    </a>
+                    <ul class="nav-menu" id="nav-menu">
+                        {% if user.is_authenticated %}
+                        <li><a href="{% url 'Home' %}">Trang Chủ</a></li>
+
+                        <li><a href="{% url 'contact' %}">Liên Hệ</a></li>
+                        <li><a href="{% url 'customer'%}">Thông tin tài khoản</a></li>
+                        {%else%}
+                        <li><a href="{% url 'Home' %}">Trang Chủ</a></li>
+
+                        <li><a href="{% url 'contact' %}">Liên Hệ</a></li>
+                        {% endif %}
+                        <li>
+                                {% if user.is_authenticated %}
+                            <a href="{% url 'logout' %}" class="bth bth-hover">
+                                <span>Đăng Xuất</span>
+                            </a>
+                                {% else %}
+                                <a href="{% url 'Login' %}" class="bth bth-hover">
+                                <span>Đăng Nhập</span>
+                                {% endif %}
+
+                            </a>
+                        </li>
+                    </ul>
+                    <!--MOBILE MENU TOGGLE-->
+                    <div class="hamburger-menu" id="hamburger-menu">
+                        <div class="hamburger"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <div class="background">
+        <div class="Noidung">
+            <h1>Nội dung phim</h1>
+        </div>
+        <div class="ThongTin">
+            <div class="AvatarPhim">
+
+            </div>
+            <div class="ThongTinPhim">
+                <div class="TenPhim">
+                    {{fi.Name}}
+                </div><br>
+                <div class="DaoDien">
+                    Đạo diễn: {{fi.Author}}
+                </div><br>
+                <div class="DienVien">
+                    Diễn viên: {{fi.Actor}}
+                </div><br>
+                <div class="TheLoai">
+                    Thể Loại: {{fi.Type}}
+                </div><br>
+                <div class="KhoiChieu">
+                    Khởi chiếu: {{fi.Premiere}}
+                </div><br>
+                <div class="ThoiLuong">
+                    Thời lượng: {{fi.Times}} phút
+                </div><br>
+                <div class="NgonNgu">
+                    Ngôn ngữ: {{fi.Language}}
+                </div><br>
+                <div class="Rated">
+                    Rated: C{{fi.Rated}} - PHIM CẤM KHÁN GIẢ DƯỚI {{fi.Rated}} TUỔI
+                </div><br>
+            </div>
+        </div>
+        <div class="DatVe">
+            <button onclick="DatVe()" name="button" type="button">
+                    Đặt vé
+                </button>
+        </div>
+        <div class="TomTat">
+
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    function DatVe() {
+        location.assign("{%url 'book' fi.id %}");
+    }
+</script>
+
+</html>

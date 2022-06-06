@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+    <title>Liên hệ</title>
+    <link rel="stylesheet" href="{% static 'CSS/styleLienHe.css'%}">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" href="{% static 'IMAGE/Logo.PNG' %}">
+</head>
+
+<body>
+     <div class="nav-wrapper">
+            <div class="container">
+                <div class="nav">
+                    <a href="{% url 'Home' %}" class="logo">
+                        <i class='bx bx-movie-play bx-tada'></i>Ci<span class="main-color">ne</span>ma
+                    </a>
+                    <ul class="nav-menu" id="nav-menu">
+                        {% if user.is_authenticated %}
+                        <li><a href="{% url 'Home' %}">Trang Chủ</a></li>
+
+                        <li><a href="{% url 'contact' %}">Liên Hệ</a></li>
+                        <li><a href="{% url 'customer'%}">Thông tin tài khoản</a></li>
+                        {%else%}
+                        <li><a href="{% url 'Home' %}">Trang Chủ</a></li>
+
+                        <li><a href="{% url 'contact' %}">Liên Hệ</a></li>
+                        {% endif %}
+                        <li>
+                                {% if user.is_authenticated %}
+                            <a href="{% url 'logout' %}" class="bth bth-hover">
+                                <span>Đăng Xuất</span>
+                                {% else %}
+                                <a href="{% url 'Login' %}" class="bth bth-hover">
+                                <span>Đăng Nhập</span>
+                                {% endif %}
+
+                            </a>
+                        </li>
+                    </ul>
+                    <!--MOBILE MENU TOGGLE-->
+                    <div class="hamburger-menu" id="hamburger-menu">
+                        <div class="hamburger"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="content">
+        <h1>Mọi thông tin chi tiết vui lòng liên hệ:</h1>
+        <div class="text">
+            <a style="text-decoration: none" href="https://www.facebook.com/profile.php?id=100012778239842">
+                <img src="{% static 'IMAGE/Facebook-logo.png' %}">Facebook Trịnh Phương
+            </a> <br>
+            <a style="text-decoration: none" href="https://www.facebook.com/phan.kiet.370">
+                <img src="{% static 'IMAGE/Facebook-logo.png' %}">Facebook Kiệt Phan
+            </a> <br>
+            <a style="text-decoration: none" href="https://www.facebook.com/thanhnam.thai2811">
+                <img src="{% static 'IMAGE/Facebook-logo.png' %}">Facebook Thái Thành Nam
+            </a> <br>
+            <a style="text-decoration: none" href="https://www.facebook.com/truongngoc.phuong.7758">
+                <img src="{% static 'IMAGE/Facebook-logo.png' %}">Facebook Trương Ngọc Phương
+            </a> <br>
+            <a style="text-decoration: none" href="https://www.facebook.com/hoaitan029">
+                <img src="{% static 'IMAGE/Facebook-logo.png' %}">Facebook Hoài Tấn
+            </a> <br>
+            <a style="text-decoration: none" href="https://www.facebook.com/profile.php?id=100010727599318">
+                <img src="{% static 'IMAGE/Facebook-logo.png' %}">Facebook Nguyễn Trung
+            </a> <br>
+        </div>
+    </div>
+
+</body>
+
+</html>

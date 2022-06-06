@@ -1,0 +1,258 @@
+:root {
+    --main-color: #c0392b;
+    --body-bg: #181616;
+    --box-bg: #221f1f;
+    --text-color: #ffffff;
+    --nav-height: 60px;
+    --space-top: 20px
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.containernav {
+    max-width: 1920px;
+    padding: 0 40px;
+    margin: auto;
+}
+
+.nav-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 99;
+    background-color: #000000;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--text-color);
+    height: var(--nav-height);
+}
+
+.nav a {
+    color: var(--text-color);
+}
+
+.num-chair,
+h1,
+.main-color {
+    color: var(--main-color);
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: 900;
+    text-decoration: none;
+}
+
+.nav-menu {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.nav-menu li~li {
+    margin-left: 30px;
+}
+
+.buttom a,
+.nav-menu a {
+    text-transform: uppercase;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.nav-menu a.bth:hover,
+a.logo:hover a.movie-item:hover {
+    color: unset;
+}
+
+.bth {
+    color: #ffffff;
+    padding: 0.25rem 1.5rem;
+    text-transform: uppercase;
+    font-size: 1.25rem;
+    font-weight: 500;
+    display: inline-flex;
+    position: relative;
+    align-items: center;
+}
+
+.bth-hover::before {
+    z-index: 1;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background-color: var(--main-color);
+    transition: 0.3s ease-in-out;
+}
+
+.bth-hover:hover::before {
+    width: 100%;
+}
+
+.bth i,
+.bth span {
+    z-index: 1;
+}
+
+.bth i {
+    margin-right: 1;
+}
+
+.hamburger-menu {
+    --size: 30px;
+    height: var(--size);
+    width: var(--size);
+    cursor: pointer;
+    z-index: 101;
+    position: relative;
+    display: none;
+    align-items: center;
+}
+
+.hamburger {
+    position: relative;
+}
+
+.hamburger,
+.hamburger::before,
+.hamburger::after {
+    width: var(--size);
+    height: 3px;
+    border-radius: 0.5rem;
+    background-color: var(--text-color);
+    transition: 0.4s;
+}
+
+.hamburger::before,
+.hamburger::after {
+    content: "";
+    position: absolute;
+    left: 0;
+}
+
+.hamburger::before {
+    top: -10px;
+}
+
+.hamburger::after {
+    bottom: -10px;
+}
+
+.hamburger-menu.active .hamburger {
+    background-color: transparent;
+}
+
+.hamburger-menu.active .hamburger::before {
+    transform-origin: top left;
+    transform: rotate(45deg);
+    left: 6px;
+}
+
+.hamburger-menu.active .hamburger::after {
+    transform-origin: bottom left;
+    transform: rotate(-45deg);
+    left: 6px;
+}
+
+
+/*--- */
+
+@import url('https://fonts.googleapis.com/css?family=Oxygen');
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Oxygen', sans-serif;
+    letter-spacing: 1px;
+}
+
+.container {
+    position: absolute;
+    top: 30%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: 350px;
+    background: rgba(103, 58, 183, 0.7);
+}
+
+.container .form_content,
+.container .login_form {
+    position: relative;
+    width: 50%;
+    height: 350px;
+    float: left;
+    box-sizing: border-box;
+}
+
+.container .form_content {
+    padding: 40px;
+    color: #fff;
+}
+
+.container .form_content a {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #fff;
+    background: #ff0057;
+    border-radius: 25px;
+    text-decoration: none;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.container .login_form {
+    background: #fff;
+    height: 380px;
+    top: -15px;
+    box-shadow: -20px 0 15px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+}
+
+.container .login_form h1 {
+    color: #262626;
+}
+
+.container .login_form input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+    outline: none;
+    font-size: 15px;
+}
+
+.container .login_form input:hover {
+    border: 2px solid #673ab7;
+}
+
+.container .login_form input[type="submit"] {
+    color: #fff;
+    background: #673ab7;
+    font-size: 16px;
+    transition: 0.5s;
+}
+
+.container .login_form input[type="submit"]:hover {
+    background: #ff0057;
+    border: 2px solid #ff0057;
+}
+
+.container .login_form a {
+    text-decoration: none;
+    font-weight: bold;
+}

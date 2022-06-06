@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+
+    <link rel="stylesheet" type="text/css" href="../../../myWeb/static/CSS/sign_in.css"/>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="/assets/image/Logo.PNG">
+    <title>PTNKTP CINEMA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'CSS/sign_in.css' %}" />
+    <script  src="{% static 'JAVASCRIPT/sign_in.js' %}"></script>
+</head>
+
+<body background="{% static 'IMAGE/cinema3_08.jpg'%}" style="background-size: 1560px 940px">
+    <!-- NAV -->
+    <div class="nav-wrapper">
+        <div class="containernav">
+            <div class="nav">
+                <a href="{% url 'Home' %}" class="logo">
+                    <i class='bx bx-movie-play bx-tada'></i>Ci<span class="main-color">ne</span>ma
+                </a>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="{% url 'Home' %}">Trang Chủ</a></li>
+
+                        <li><a href="{% url 'contact' %}">Liên Hệ</a></li>
+                    <li>
+                        <a href="{%static 'Login'%}" class="bth bth-hover">
+                            <span>Đăng Nhập</span>
+                        </a>
+                    </li>
+                </ul>
+                <!--MOBILE MENU TOGGLE-->
+                <div class="hamburger-menu" id="hamburger-menu">
+                    <div class="hamburger"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END NAV-->
+    <section>
+        <div class="container">
+            <div class="form_content">
+                <h2>PTNKTP CINEMA</h2>
+                <p>PTNKTP cinemas are a place for dating, relaxing and meeting young people. Here decor, beautiful layout, open space and waiting time to watch movies is golden time for service access.</p>
+                <a href="#">Read More</a>
+            </div>
+            <div class="login_form">
+                <h1>Sign In</h1>
+                <form action="." method="post">
+                    {% csrf_token %}
+                    <input id="username_in" type="text" name="username" required="" placeholder="Username">
+                    <input id="password_in" type="password" name="password" required="" placeholder="Password">
+                    {% if messages %}
+                {% for mess in messages %}
+                    {{ mess }}
+                {% endfor %}
+                    {% endif %}
+                    <input onclick="dieu_huong()" type="submit" name="" value="Login">
+                </form>
+                <a href='http://127.0.0.1:8000/regist/' style="float: right;">Register</a>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
